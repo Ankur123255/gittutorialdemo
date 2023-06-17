@@ -46,7 +46,7 @@
 // }
 
 // QUERY SELECTOR //
-var header = document.querySelector('#main-header');
+/*var header = document.querySelector('#main-header');
 header.style.borderBottom = 'solid 4px #ccc';
 
 var input = document.querySelector('input');
@@ -77,5 +77,80 @@ for(var i = 0; i < odd.length; i++)
 {
     odd[i].style.backgroundColor = '#f4f4f4';
     even[i].style.backgroundColor = '#ccc';
-}
+}*/
 // query selctor and queryselectorall above//
+
+// TRANSVERSING THE DOM //
+var itemList = document.querySelector('#items');
+// PARENT NODE
+// console.log(itemList.parentNode);
+// itemList.parentNode.style.backgroundColor = '#f4f4f4';
+// console.log(itemList.parentNode.parentNode.parentNode);
+
+// PARENT ELEMENT//
+// console.log(itemList.parentElement);
+// itemList.parentElement.style.backgroundColor = '#f4f4f4';
+// console.log(itemList.parentElement.parentElement.parentElement);
+
+// CHILDNODES//
+// console.log(itemList.childNodes);
+
+/*console.log(itemList.children);
+console.log(itemList.children[1]);
+itemList.children[1].style.backgroundColor = 'yellow';
+
+// FIRST CHILD//
+console.log(itemList.firstChild);
+
+// FIRST ELEMENT CHILD //
+console.log(itemList.firstElementChild);
+itemList.firstElementChild.textContent = 'Hello 1';*/
+
+// LAST CHILD//
+// console.log(itemList.lastChild);
+
+
+// LAST LEMENT CHILD//
+// console.log(itemList.lastElementChild);
+// itemList.lastElementChild.textContent = 'Hello 4';
+
+// NEXT SIBLING//
+// console.log(itemList.nextSibling);
+
+// NEXT ELEMENT SIBLING//
+// console.log(itemList.nextElementSibling);
+
+// PREVIOUS SIBLING
+// console.log(itemList.previousSibling);
+
+// PREVIOUS ELEMENT SIBLING
+// console.log(itemList.previousElementSibling);
+// itemList.previousElementSibling.computedStyleMap.color = 'green';
+
+// CREATE ELEMENT
+// CREATE A DIV
+var newDDiv = document.createElement('div');
+
+// add class
+newDiv.className= 'hello';
+
+// add id
+newDiv.id = 'hello1';
+
+// add attribute
+newDiv.setAttribute('title', 'Hello Div');
+
+// create text node
+var newDIvTExt = document.createTextNode('Hello World');
+
+// Add text to div
+newDiv.appendChild(newDivText);
+
+var container = document.querySelector('header.container');
+var h1 = docment.querySelector('header h1');
+
+console.log(newDiv);
+
+newDiv.style.fontSize = '30px';
+
+container.insertBefore(newDiv, h1);
