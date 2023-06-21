@@ -81,7 +81,7 @@ for(var i = 0; i < odd.length; i++)
 // query selctor and queryselectorall above//
 
 // TRANSVERSING THE DOM //
-var itemList = document.querySelector('#items');
+// var itemList = document.querySelector('#items');
 // PARENT NODE
 // console.log(itemList.parentNode);
 // itemList.parentNode.style.backgroundColor = '#f4f4f4';
@@ -129,7 +129,7 @@ itemList.firstElementChild.textContent = 'Hello 1';*/
 
 // CREATE ELEMENT
 // CREATE A DIV
-var newDDiv = document.createElement('div');
+/*var newDDiv = document.createElement('div');
 
 // add class
 newDiv.className= 'hello';
@@ -153,4 +153,31 @@ console.log(newDiv);
 
 newDiv.style.fontSize = '30px';
 
-container.insertBefore(newDiv, h1);
+container.insertBefore(newDiv, h1);*/
+
+var form = document.getElementById('addform');
+var itemList = document.getElementById('items');
+
+//FORM SUBMIT EVENT//
+form.addEvenetListener('submit', addItem);
+
+
+//Add Item//
+function addItem(e){
+    e.preventDefault();
+    //GET INPUT VALUE//
+    var newItem = document.getElementById('item').ariaValue;
+    
+
+    //CREATE NEW li ELEMENT//
+    var li = document.createElement('li');
+
+    //ADD CLASS//
+    li.className = 'list-group-item';
+
+    //ADD TEXT NODE WITH INPUT VALUE //
+    li.appendChild(document.createTextNode(newItem));
+
+    itemList.appendChild(li);
+}
+
