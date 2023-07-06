@@ -8,14 +8,14 @@
 // console.log(document.images);
 // console.log(document.getElementById('header-title'))
 // var headerTitle = document.getElementById('header-title');
-// console.log(headerTitle);
+//  console.log(headerTitle);
 // headerTitle.textContent = "hello";
 // headerTitle.innerText = 'goodbye'
 // console.log(headerTitle.innerText)
 
 // headerTitle.innerHTML = '<h3>Hello</h3>';
 
-// header.style.borderBottom = 'solid 3px #000';
+//  header.style.borderBottom = 'solid 3px #cfcfcf';
 // get elemnts by class name
 // var items = document.getElementsByClassName('list-group-item');
 // console.log(items);
@@ -155,7 +155,7 @@ newDiv.style.fontSize = '30px';
 
 container.insertBefore(newDiv, h1);*/
 
-var form = document.getElementById('addform');
+/*var form = document.getElementById('addform');
 var itemList = document.getElementById('items');
 
 //FORM SUBMIT EVENT//
@@ -179,5 +179,13 @@ function addItem(e){
     li.appendChild(document.createTextNode(newItem));
 
     itemList.appendChild(li);
-}
+}*/
 
+// let header = document.getElementById('header-title');
+// // header.style.border = "solid 4px red";
+// // header.addEventListener.text
+// header.style.color = "red";
+
+// header.style.fontWeight = "bold";
+var headerTitle = document.getElementById('header-title')
+console.log(headerTitle)
