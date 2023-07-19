@@ -1,46 +1,115 @@
-arr = [1, 2 ,3, 6, 5]
-class Node{
-    constructor (val, node=null){
-        this.val=val;
-        this.next=node
+// Simulating asynchronous operations with setTimeout
 
-    }
-}
+function createPost(post) {
 
-class linkedlist{
-    head=null;
-    tail=null;
-    size=0;
+ return new Promise((resolve) => {
 
-    addtohead(addnumber){
-        let node = {
-            val: addnumber,
-            next:null
-        }
-this.size ++
-if(this.head==null){
-    this.head=node;
-    this.tail=node
-}
-else{
-node.next = this.head;
-this.head=node;
-}
+  setTimeout(() => {
+
+   // Simulating the creation of a post
+
+   const createdPost = { ...post, createdAt: new Date() };
+
+   resolve(createdPost);
+
+  }, 1000);
+
+ });
 
 }
-gethead(){
-    return this.head;
-    }
-gettail(){
-    return this.tail
-}
-        
-    }
 
-    const list =new linkedlist();
-    list.addtohead(123);
-    list.addtohead(72787)
-    console.log(list.gethead())
-    console.log(list.gettail())
+
+
+function updateLastUserActivityTime(user) {
+
+ return new Promise((resolve) => {
+
+  setTimeout(() => {
+
+   // Simulating updating the user's last activity time
+
+   const updatedUser = { ...user, lastActivityTime: new Date() };
+
+   resolve(updatedUser);
+
+  }, 1000);
+
+ });
+
+}
+
+
+
+function deletePost(postId) {
+
+ return new Promise((resolve) => {
+
+  setTimeout(() => {
+
+   // Simulating the deletion of a post
+
+   resolve();
+
+  }, 1000);
+
+ });
+
+}
+
+
+
+// Usage
+
+const user = { name: 'John', lastActivityTime: null };
+
+const posts = [];
+
+
+
+async function updateLastUserActivityFlow() {
+
+ try {
+
+  const post = await createPost({ title: 'New Post' });
+
+  posts.push(post);
+
+
+
+  const updatedUser = await updateLastUserActivityTime(user);
+
+  console.log('Posts:', posts);
+
+  console.log('Last Activity Time:', updatedUser.lastActivityTime);
+
+
+
+  if (posts.length > 0) {
+
+   const lastPostId = posts[posts.length - 1].id;
+
+   await deletePost(lastPostId);
+
+   console.log('Post Deleted');
+
+
+
+   // Log the new set of posts after deletion
+
+   console.log('New Posts:', posts);
+
+  }
+
+ } catch (error) {
+
+  console.error(error);
+
+ }
+
+}
+
+
+
+updateLastUserActivityFlow();
    
     
