@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todos</title>
+</head>
+
+<body>
+    <form onsubmit="addItem(event)">
+        <labelfor="todoname">todo Name:</label>
+            <input type="text" id="todoname" name="todoname">
+            <label for="description">Description</label>
+            <input type="text" id="description" name="description">
+            <button>Add Item</button>
+    </form>
+    <h1>todos remaining</h1>
+    <ul id="list"></ul><br><br>
+
+    <h1>todos done</h1>
+    <ul id="done"></ul>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+
+<script>
+
+    async function addItem(event) {
+        event.preventDefault();
+
+        const todoname = event.target.todoname.value;
+        const description = event.target.description.value;
+        const flag = false;
+
+        const obj = {
+            todoname,
+            description,
+            flag
+
+
+        };
+        try {
+            const response = await axios.post('https://crudcrud.com/api/fc8391578d064feea125ce8b125e2aa7/todo', obj)
+            // .then((res) => showonscreen(res.data));
+            await showonscreen(response.data)
+        }
+        catch (error) {
+            console.log("something went wrong!", error);
+        }
+
+
+    }
+    window.addEventListener("DOMContentLoaded", async () => {
+        try {
+            const res = await axios.get("https://crudcrud.com/api/fc8391578d064feea125ce8b125e2aa7/todo")
+            const items = res.data;
+            console.log(res.data);
+
+            for (let i = 0; i < res.data.length; i++) {
+
+                if (res.data[i].flag === false) {
+                    showonscreen(res.data[i])
+                } else {
+                    if (res.data[i].flag === true) {
+                        const parentnode = document.getElementById('done');
+
+
+                        const childnode = `<li>${res.data[i].todoname}-${res.data[i].description}`
+
+
+                        parentnode.innerHTML = parentnode.innerHTML + childnode;
+
+                    }
+
+                }
+
+            }
+
+        }
+
+
+        catch (error) {
+            console.log("something went wrong!", error);
+        }
+
+
+    })
+
+
+
+    async function showonscreen(user) {
+        try {
+            event.preventDefault();
+            document.getElementById('todoname').value = '';
+            document.getElementById('description').value = '';
+            // document.getElementById('phonenumber').value = '';
+            let parentNode = document.getElementById('list');
+            const childNode = `<li id=${user._id}>${user.todoname}-${user.description}
+                        <button onclick="todosdone('${user.todoname}','${user.description}','${user._id}')">add</button>
+                        <button onclick=deleteUser('${user._id}')>X</button>`
+
+
+            parentNode.innerHTML = parentNode.innerHTML + childNode;
+        }
+        catch (error) {
+            console.log("something went wrong in showonscreen", error);
+        }
+
+
+
+    }
+    async function todosdone(todoname, description, userId) {
+
+        try {
+            event.preventDefault();
+            const respon = await axios.put(`https://crudcrud.com/api/fc8391578d064feea125ce8b125e2aa7/todo/${userId}`, {
+                todoname: todoname,
+                description: description,
+                flag: true
+            })
+
+            const ul = document.getElementById('done');
+
+            const li = document.createElement('li');
+            li.textContent = todoname + "-" + description
+            ul.appendChild(li);
+
+
+
+            await removeUserfromScreen(userId);
+        }
+
+
+
+        catch (error) {
+
+
+            console.log("something went wrong! in todosdone", error);
+        }
+
+
+
+
+    }
+
+
+
+    async function deleteUser(userId) {
+        try {
+            event.preventDefault();
+            await axios.delete(`https://crudcrud.com/api/fc8391578d064feea125ce8b125e2aa7/todo/${userId}`)
+
+            await removeUserfromScreen(userId);
+
+
+        }
+        catch (error) {
+            console.log("something went wrong in deleteUser", error);
+        }
+    }
+
+
+    async function removeUserfromScreen(userId) {
+        try {
+            let parent = document.getElementById('list');
+            const childNodeDeleted = document.getElementById(userId);
+
+            parent.removeChild(childNodeDeleted)
+
+        }
+        catch (error) {
+            console.log("something went wrong in removeuserfromscreen", error);
+        }
+
+    }
+
+
+
+
+
+
+
+
+</script>
+
+</html>

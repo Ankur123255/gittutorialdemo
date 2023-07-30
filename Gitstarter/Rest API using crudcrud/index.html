@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>products</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="col-md-6">
+                    <form onsubmit="save(event)">
+                        <label for="price">Selling Price:</label>
+                        <input type="number" name="price" class="form-control" id="price">
+                        <label for="productname">Product Name:</label>
+                        <input type="text" name="productname" class="form-control" id="productname"><br>
+                        <button class="btn btn-primary">Add product</button>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ul id="list">
+        <h1>Products</h1>
+         
+    </ul>
+<li id="total"></li>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script>
+        function save(event) {
+            event.preventDefault();
+
+            const price = event.target.price.value;
+            const productname = event.target.productname.value;
+
+            const obj = {
+                price,
+                productname
+            }
+            localStorage.setItem(obj.productname, JSON.stringify(obj))
+            axios.post('https://crudcrud.com/api/fc8391578d064feea125ce8b125e2aa7/product', obj)
+                .then(response => showonscreen(response))
+                .catch(error => {
+                    document.body.innerHTML = document.body.innerHTML + "<h4>Something Went Wrong</h4>"
+                    console.log(error)
+                })
+            //showonscreen(obj)
+        }
+        window.addEventListener("DOMContentLoaded", () => {
+            axios.get('https://crudcrud.com/api/fc8391578d064feea125ce8b125e2aa7/product')
+                .then((res) => {
+                    //   console.log(res.data);
+
+
+                    for (i = 0; i < res.data.length; i++) {
+                        showonscreen(res.data[i])
+                    }
+                })
+                .catch((err) => {
+                    ///if it error occured
+                    document.body.innerHTML = document.body.innerHTML + "<h4>Something Went Wrong</h4>"
+                    console.log(err)
+                })
+        })
+
+        function showonscreen(user) {
+            document.getElementById('price').value = '';
+            document.getElementById('productname').value = '';
+            // document.getElementById('phonenumber').value = '';
+            let parentNode = document.getElementById('list');
+            const childNode = `<li id=${user._id}>${user.price}-${user.productname}
+                        <button onclick=deleteUser('${user._id}')>Delete User</button>`
+
+
+            parentNode.innerHTML = parentNode.innerHTML + childNode
+
+
+        }
+        var ul = document.getElementById('total')
+        var totalprice = document.createElement('h1')
+        totalprice.textContent = "Total Worth Price:"
+        ul.appendChild(totalprice)
+        function deleteUser(userId) {
+            axios.delete(`https://crudcrud.com/api/fc8391578d064feea125ce8b125e2aa7/product/${userId}`)
+                .then((response) => {
+                    removeUserfromScreen(userId)
+                }).catch((err) => {
+                    ///if it error occured
+                    document.body.innerHTML = document.body.innerHTML + "<h4>Something Went Wrong</h4>"
+                    console.log(err)
+                })
+
+            function removeUserfromScreen(userId) {
+                let parent = document.getElementById('list');
+                const childNodeDeleted = document.getElementById(userId);
+
+                parent.removeChild(childNodeDeleted)
+
+            }
+        }
+
+
+
+    </script>
+</body>
+
+</html>
